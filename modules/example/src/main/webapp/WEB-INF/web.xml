@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+    <!--<servlet>-->
+    <!--<servlet-name>StartServer</servlet-name>-->
+    <!--<servlet-class>ServletSample</servlet-class>-->
+    <!--</servlet>-->
+
+    <!--<servlet-mapping>-->
+    <!--<servlet-name>StartServer</servlet-name>-->
+    <!--<url-pattern>/startserver.do</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>JaxrsServer</servlet-name>
+        <servlet-class>org.wso2.carbon.jaxrs.core.JAXRSServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>JaxrsServer</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+    <!--<servlet>-->
+    <!--<servlet-name>myfriendList</servlet-name>-->
+    <!--<servlet-class>com.foo.bar.CreateContact</servlet-class>-->
+    <!--</servlet>-->
+
+    <!--<servlet-mapping>-->
+    <!--<servlet-name>myfriendList</servlet-name>-->
+    <!--<url-pattern>/friends.do</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+
+</web-app>
