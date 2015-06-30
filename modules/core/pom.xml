@@ -18,17 +18,47 @@
         <dependency>
             <groupId>org.eclipse.osgi</groupId>
             <artifactId>org.eclipse.osgi</artifactId>
-            <version>3.9.1.v20130814-1242</version>
+            <version>${equinox.osgi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.osgi</groupId>
             <artifactId>org.eclipse.osgi.services</artifactId>
-            <version>3.3.100.v20130513-1956</version>
+            <version>${equinox.osgi.services.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.continuuity</groupId>
-            <artifactId>http</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <version>${rs-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>13.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>${findbugs.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils-core</artifactId>
+            <version>${beanutils.version}</version>
         </dependency>
     </dependencies>
 
@@ -53,4 +83,18 @@
             </plugin>
         </plugins>
     </build>
+
+    <properties>
+        <equinox.osgi.version>3.9.1.v20130814-1242</equinox.osgi.version>
+        <equinox.osgi.services.version>3.3.100.v20130513-1956</equinox.osgi.services.version>
+        <rs-api.version>2.0</rs-api.version>
+        <netty.version>3.6.6.Final</netty.version>
+        <slf4j.version>1.7.5</slf4j.version>
+        <gson.version>2.2.4</gson.version>
+        <guava.version>13.0.1</guava.version>
+        <findbugs.version>2.0.1</findbugs.version>
+        <beanutils.version>1.8.3</beanutils.version>
+        <junit.version>4.11</junit.version>
+        <commons.io.version>2.4</commons.io.version>
+    </properties>
 </project>

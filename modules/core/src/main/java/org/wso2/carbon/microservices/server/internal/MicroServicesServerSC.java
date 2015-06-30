@@ -18,8 +18,6 @@
  */
 package org.wso2.carbon.microservices.server.internal;
 
-import com.continuuity.http.AbstractHttpHandler;
-import com.continuuity.http.NettyHttpService;
 import org.osgi.service.component.annotations.*;
 
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ public class MicroServicesServerSC {
     }
 
     @Reference(
-            name = "continuuity.http.handler",
+            name = "http.handler",
             service = AbstractHttpHandler.class,
             cardinality = ReferenceCardinality.AT_LEAST_ONE,
             policy = ReferencePolicy.DYNAMIC,
