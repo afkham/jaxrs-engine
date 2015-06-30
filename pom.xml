@@ -42,8 +42,8 @@
     </properties>
 
     <modules>
-        <module>modules/core</module>
-        <module>modules/example</module>
+        <module>core</module>
+        <module>example</module>
     </modules>
 
 
