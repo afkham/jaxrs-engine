@@ -78,6 +78,7 @@
                         <Import-Package>
                             *; resolution = optional
                         </Import-Package>
+                        <Embed-Dependency>netty,gson,guava,commons-beanutils-core,slf4j-api</Embed-Dependency>
                     </instructions>
                 </configuration>
             </plugin>
