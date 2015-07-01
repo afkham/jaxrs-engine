@@ -32,6 +32,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

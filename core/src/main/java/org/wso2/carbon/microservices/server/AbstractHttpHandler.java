@@ -14,12 +14,13 @@
  * the License.
  */
 
-package org.wso2.carbon.microservices.server.internal;
+package org.wso2.carbon.microservices.server;
 
 import org.jboss.netty.handler.codec.http.HttpRequest;
+import org.wso2.carbon.microservices.server.internal.*;
 
 /**
- * A base implementation of {@link HttpHandler} that provides a method for sending a request to other
+ * A base implementation of {@link org.wso2.carbon.microservices.server.internal.HttpHandler} that provides a method for sending a request to other
  * handlers that exist in the same server.
  */
 public abstract class AbstractHttpHandler implements HttpHandler {
@@ -37,7 +38,7 @@ public abstract class AbstractHttpHandler implements HttpHandler {
    * Send a request to another handler internal to the server, getting back the response body and response code.
    *
    * @param request request to send to another handler.
-   * @return {@link BasicInternalHttpResponse} containing the response code and body.
+   * @return {@link org.wso2.carbon.microservices.server.internal.BasicInternalHttpResponse} containing the response code and body.
    */
   protected InternalHttpResponse sendInternalRequest(HttpRequest request) {
     InternalHttpResponder responder = new InternalHttpResponder();

@@ -19,6 +19,7 @@
 package org.wso2.carbon.microservices.server.internal;
 
 import org.osgi.service.component.annotations.*;
+import org.wso2.carbon.microservices.server.AbstractHttpHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +34,21 @@ public class MicroServicesServerSC {
 
     @Activate
     protected void start() {
-        //TODO: introduce netty config file to set HTTP/S port, certs, credentials etc
-        // netty-http-config.conf properties file
+        try {
+            System.out.println("Starting micro services server...");
+            //TODO: introduce netty config file to set HTTP/S port, certs, credentials etc
+            // netty-http-config.conf properties file
 
-        //TODO: wait until all HttpHandlers become available
-        NettyHttpService service = NettyHttpService.builder().setPort(7777).addHttpHandlers(httpHandlers).build();
+            //TODO: wait until all HttpHandlers become available
+            NettyHttpService service = NettyHttpService.builder().setPort(7777).addHttpHandlers(httpHandlers).build();
 
-        // Start the HTTP service
-        service.startAndWait();
+            // Start the HTTP service
+            service.startAndWait();
+
+            System.out.println("Micro services server started");
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     @Reference(
@@ -48,13 +56,14 @@ public class MicroServicesServerSC {
             service = AbstractHttpHandler.class,
             cardinality = ReferenceCardinality.AT_LEAST_ONE,
             policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeHttpHandle"
+            unbind = "removeHttpHandler"
     )
     protected void addHttpHandler(AbstractHttpHandler httpHandler) {
         httpHandlers.add(httpHandler);
+        System.out.println("Added HTTP Handler " + httpHandler);
     }
 
-    protected void removeHttpHandle(AbstractHttpHandler httpHandler) {
+    protected void removeHttpHandler(AbstractHttpHandler httpHandler) {
         httpHandlers.remove(httpHandler);
     }
 }

@@ -23,6 +23,7 @@ import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 import java.io.File;
 import java.lang.reflect.Type;

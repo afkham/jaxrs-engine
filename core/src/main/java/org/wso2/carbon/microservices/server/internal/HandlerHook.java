@@ -18,6 +18,7 @@ package org.wso2.carbon.microservices.server.internal;
 
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 /**
  * Interface that needs to be implemented to intercept handler method calls.

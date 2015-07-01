@@ -28,6 +28,7 @@ import org.jboss.netty.buffer.ChannelBufferOutputStream;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.http.*;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 import java.io.File;
 import java.io.IOException;

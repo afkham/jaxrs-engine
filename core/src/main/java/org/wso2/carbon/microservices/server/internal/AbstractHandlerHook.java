@@ -18,10 +18,11 @@ package org.wso2.carbon.microservices.server.internal;
 
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 /**
  * A base implementation of {@link HandlerHook} that provides no-op for both
- * {@link HandlerHook#preCall(org.jboss.netty.handler.codec.http.HttpRequest, HttpResponder, HandlerInfo)}
+ * {@link HandlerHook#preCall(org.jboss.netty.handler.codec.http.HttpRequest, org.wso2.carbon.microservices.server.HttpResponder, HandlerInfo)}
  * and {@link HandlerHook#postCall(org.jboss.netty.handler.codec.http.HttpRequest,
  * org.jboss.netty.handler.codec.http.HttpResponseStatus, HandlerInfo)} methods.
  */

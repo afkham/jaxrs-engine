@@ -1,2 +1,2 @@
 # jaxrs-engine
-A lightweight JAXRS engine that supports a main JAXRS annotations, and JSON payloads
+A lightweight JAXRS engine that runs on Netty, and supports the main JAXRS annotations, and JSON payloads

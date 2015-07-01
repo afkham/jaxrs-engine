@@ -25,6 +25,7 @@ import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 import java.net.HttpURLConnection;
 import java.net.URI;

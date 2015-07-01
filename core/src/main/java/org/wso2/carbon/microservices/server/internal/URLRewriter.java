@@ -17,6 +17,7 @@
 package org.wso2.carbon.microservices.server.internal;
 
 import org.jboss.netty.handler.codec.http.HttpRequest;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 /**
  * Re-writes URL of an incoming request before any handlers or their hooks are called.

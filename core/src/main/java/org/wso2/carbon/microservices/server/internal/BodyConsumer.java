@@ -16,6 +16,7 @@
 package org.wso2.carbon.microservices.server.internal;
 
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 /**
  * HttpHandler would extend this abstract class and implement methods to stream the body directly.

@@ -22,6 +22,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.handler.codec.http.HttpChunk;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

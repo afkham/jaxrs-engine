@@ -1,25 +1,42 @@
 package org.wso2.carbon.microservices.example;
 
-import com.continuuity.http.AbstractHttpHandler;
-import com.continuuity.http.HttpResponder;
 import com.google.gson.JsonObject;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
+import org.wso2.carbon.microservices.server.AbstractHttpHandler;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 import javax.ws.rs.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Path("/StockQuote")
 public class StockQuoteService extends AbstractHttpHandler {
 
-    // http://localhost:8080/example/StockQuote/get/IBM
+    // http://localhost:7778/StockQuote/get/IBM
+
+    private Map<String, Double> stockQuotes = new HashMap<String, Double>();
+
+    public StockQuoteService() {
+        stockQuotes.put("IBM", 77.45);
+        stockQuotes.put("GOOG", 200.65);
+        stockQuotes.put("AMZN", 145.88);
+    }
 
     @GET
     @Path("get/{symbol}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void getQuote(@PathParam("symbol") String direction) {
-
-
+    public void getQuote(HttpRequest request, HttpResponder responder, @PathParam("symbol") String symbol) {
+        Double price = stockQuotes.get(symbol);
+        if (price != null) {
+            JsonObject response = new JsonObject();
+            response.addProperty("symbol", symbol);
+            response.addProperty("price", price);
+            responder.sendJson(HttpResponseStatus.OK, response);
+        } else {
+            responder.sendStatus(HttpResponseStatus.NOT_FOUND);
+        }
     }
 
     @Path("/v1/ping")
@@ -82,4 +99,9 @@ public class StockQuoteService extends AbstractHttpHandler {
         responder.sendJson(HttpResponseStatus.OK, status);
     }
 
+
+    @Override
+    public String toString() {
+        return "StockQuoteService{}";
+    }
 }

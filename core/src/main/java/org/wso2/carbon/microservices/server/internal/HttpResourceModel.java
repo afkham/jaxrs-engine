@@ -24,6 +24,7 @@ import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.microservices.server.HttpResponder;
 
 import javax.ws.rs.PathParam;
 import java.lang.annotation.Annotation;

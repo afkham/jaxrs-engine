@@ -14,7 +14,7 @@
  * the License.
  */
 
-package org.wso2.carbon.microservices.server.internal;
+package org.wso2.carbon.microservices.server;
 
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
