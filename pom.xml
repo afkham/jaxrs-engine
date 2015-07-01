@@ -50,6 +50,7 @@
         <maven.scrplugin.version>1.16.0</maven.scrplugin.version>
         <apache.felix.scr.ds-annotations.version>1.2.4</apache.felix.scr.ds-annotations.version>
         <osgi.framework.import.version.range>[1.7.0, 1.8.0)</osgi.framework.import.version.range>
+        <osgi.service.tracker.import.version.range>[1.5.1, 1.6.0)</osgi.service.tracker.import.version.range>
     </properties>
 
     <modules>

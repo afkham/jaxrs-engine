@@ -16,13 +16,11 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.microservices.server.internal;
+package org.wso2.carbon.microservices.server.internal.osgi;
 
 import org.osgi.service.component.annotations.*;
-import org.wso2.carbon.microservices.server.AbstractHttpHandler;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.wso2.carbon.microservices.server.AbstractHttpService;
+import org.wso2.carbon.microservices.server.internal.NettyHttpService;
 
 @Component(
         name = "org.wso2.carbon.microservices.server.internal.MicroServicesServerSC",
@@ -30,7 +28,8 @@ import java.util.List;
 )
 public class MicroServicesServerSC {
 
-    private List<AbstractHttpHandler> httpHandlers = new ArrayList<AbstractHttpHandler>();
+    private final DataHolder dataHolder = DataHolder.getInstance();
+    private NettyHttpService nettyHttpService;
 
     @Activate
     protected void start() {
@@ -40,11 +39,12 @@ public class MicroServicesServerSC {
             // netty-http-config.conf properties file
 
             //TODO: wait until all HttpHandlers become available
-            NettyHttpService service = NettyHttpService.builder().setPort(7777).addHttpHandlers(httpHandlers).build();
+            nettyHttpService =
+                    NettyHttpService.builder().setPort(7777).
+                            addHttpHandlers(dataHolder.getHttpServices()).build();
 
             // Start the HTTP service
-            service.startAndWait();
-
+            nettyHttpService.startAndWait();
             System.out.println("Micro services server started");
         } catch (Throwable e) {
             e.printStackTrace();
@@ -53,17 +53,21 @@ public class MicroServicesServerSC {
 
     @Reference(
             name = "http.handler",
-            service = AbstractHttpHandler.class,
+            service = AbstractHttpService.class,
             cardinality = ReferenceCardinality.AT_LEAST_ONE,
             policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeHttpHandler"
+            unbind = "removeHttpService"
     )
-    protected void addHttpHandler(AbstractHttpHandler httpHandler) {
-        httpHandlers.add(httpHandler);
-        System.out.println("Added HTTP Handler " + httpHandler);
+    protected void addHttpService(AbstractHttpService httpService) {
+        dataHolder.addHttpService(httpService);
+        if(nettyHttpService.isRunning()) {
+            nettyHttpService.addHttpHandler(httpService);
+        }
+        System.out.println("Added HTTP Service " + httpService);
     }
 
-    protected void removeHttpHandler(AbstractHttpHandler httpHandler) {
-        httpHandlers.remove(httpHandler);
+    protected void removeHttpService(AbstractHttpService httpService) {
+        dataHolder.removeHttpService(httpService);
+        //TODO: handle removing HttpService from NettyHttpService
     }
 }

@@ -91,15 +91,19 @@
                     <instructions>
                         <Bundle-Vendor>WSO2 Inc</Bundle-Vendor>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Activator>
+                            org.wso2.carbon.microservices.server.internal.osgi.MicrosServicesActivator
+                        </Bundle-Activator>
                         <Private-Package>
                             org.wso2.carbon.microservices.server.internal
                         </Private-Package>
                         <Export-Package>
                             !org.wso2.carbon.microservices.server.internal,
-                            org.wso2.carbon.microservices.server
+                            org.wso2.carbon.microservices.server.*;version="1.0.0"
                         </Export-Package>
                         <Import-Package>
                             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
+                            org.osgi.util.tracker; version="${osgi.service.tracker.import.version.range}",
                             org.jboss.netty.*,
                             com.google.gson.*,
                             com.google.common.*,

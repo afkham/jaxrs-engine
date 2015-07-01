@@ -16,20 +16,32 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.microservices.example.internal;
+package org.wso2.carbon.microservices.server.internal.osgi;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.wso2.carbon.microservices.example.StockQuoteService;
+import org.osgi.util.tracker.ServiceTracker;
 import org.wso2.carbon.microservices.server.AbstractHttpService;
 
 /**
  * TODO: class level comment
  */
-public class StockQuoteActivator implements BundleActivator {
+public class MicrosServicesActivator implements BundleActivator {
+
     public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(AbstractHttpService.class, new StockQuoteService(), null);
-        System.out.println("Registered StockQuoteService");
+        ServiceTracker tracker =
+                new ServiceTracker(bundleContext, AbstractHttpService.class.getName(), null);
+        try {
+            tracker.open();
+            Object[] services = tracker.getServices();
+            if (services != null) {
+                for (Object service : services) {
+                    DataHolder.getInstance().addHttpService((AbstractHttpService) service);
+                }
+            }
+        } finally {
+            tracker.close();
+        }
     }
 
     public void stop(BundleContext bundleContext) throws Exception {

@@ -16,35 +16,41 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.microservices.example;
+package org.wso2.carbon.microservices.server.internal.osgi;
 
 import org.wso2.carbon.microservices.server.AbstractHttpService;
-import org.wso2.carbon.microservices.server.internal.NettyHttpService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * TODO: class level comment
  */
-public class Tester {
-    public static void main(String[] args) {
-        List<AbstractHttpService> httpHandlers = new ArrayList<AbstractHttpService>();
-        httpHandlers.add(new StockQuoteService());
-        NettyHttpService service =
-                NettyHttpService.builder().setPort(7778).addHttpHandlers(httpHandlers).build();
+public class DataHolder {
 
-        // Start the HTTP service
-        service.startAndWait();
+    private List<AbstractHttpService> httpServices = new ArrayList<AbstractHttpService>();
 
+    private static DataHolder instance = new DataHolder();
 
-        while (true) {
-            try {
-                TimeUnit.SECONDS.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    private DataHolder() {
     }
+
+    static DataHolder getInstance() {
+        return instance;
+    }
+
+    void addHttpService(AbstractHttpService httpHandler) {
+        httpServices.add(httpHandler);
+        System.out.println("Added HTTP Service " + httpHandler);
+    }
+
+    void removeHttpService(AbstractHttpService httpService) {
+        httpServices.remove(httpService);
+    }
+
+    List<AbstractHttpService> getHttpServices() {
+        return Collections.unmodifiableList(httpServices);
+    }
+
 }

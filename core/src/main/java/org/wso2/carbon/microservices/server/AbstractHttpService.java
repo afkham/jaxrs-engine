@@ -23,7 +23,7 @@ import org.wso2.carbon.microservices.server.internal.*;
  * A base implementation of {@link org.wso2.carbon.microservices.server.internal.HttpHandler} that provides a method for sending a request to other
  * handlers that exist in the same server.
  */
-public abstract class AbstractHttpHandler implements HttpHandler {
+public abstract class AbstractHttpService implements HttpHandler {
   private HttpResourceHandler httpResourceHandler;
 
   public void init(HandlerContext context) {
