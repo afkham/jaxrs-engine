@@ -35,7 +35,7 @@ public class MicroServicesServerSC {
     @Activate
     protected void start() {
         try {
-            System.out.println("Starting micro services server...");
+            System.out.println("+++ Starting micro services server...");
             //TODO: introduce netty config file to set HTTP/S port, certs, credentials etc
             // netty-http-config.conf properties file
 

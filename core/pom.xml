@@ -99,11 +99,14 @@
                             org.wso2.carbon.microservices.server
                         </Export-Package>
                         <Import-Package>
-                            org.osgi.framework.*;version="${osgi.framework.import.version.range}"
+                            org.osgi.framework.*;version="${osgi.framework.import.version.range}",
+                            org.jboss.netty.*,
+                            com.google.gson.*,
+                            com.google.common.*,
+                            javax.ws.rs.*,
+                            org.slf4j.*,
+                            org.apache.commons.beanutils.*
                         </Import-Package>
-
-                        <!--<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>-->
-                        <Embed-Dependency>netty,gson,guava,commons-beanutils-core,slf4j-api,javax.ws.rs-api</Embed-Dependency>
                         <_dsannotations>*</_dsannotations>
                     </instructions>
                 </configuration>

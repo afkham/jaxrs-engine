@@ -60,10 +60,11 @@
                         <Bundle-Activator>org.wso2.carbon.microservices.example.internal.StockQuoteActivator</Bundle-Activator>
                         <Import-Package>
                             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
-                            org.wso2.carbon.microservices.server
+                            org.wso2.carbon.microservices.server,
+                            org.jboss.netty.*,
+                            com.google.gson.*,
+                            javax.ws.rs.*
                         </Import-Package>
-                        <!--<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>-->
-                        <Embed-Dependency>netty,gson</Embed-Dependency>
                     </instructions>
                 </configuration>
             </plugin>
