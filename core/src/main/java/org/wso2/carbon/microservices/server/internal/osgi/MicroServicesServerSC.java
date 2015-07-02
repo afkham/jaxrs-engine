@@ -18,49 +18,74 @@
  */
 package org.wso2.carbon.microservices.server.internal.osgi;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.microservices.server.AbstractHttpService;
 import org.wso2.carbon.microservices.server.internal.NettyHttpService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component(
         name = "org.wso2.carbon.microservices.server.internal.MicroServicesServerSC",
         immediate = true
 )
+@SuppressWarnings("unused")
 public class MicroServicesServerSC {
-
     private static final Logger LOG = LoggerFactory.getLogger(MicroServicesServerSC.class);
 
     private final DataHolder dataHolder = DataHolder.getInstance();
     private NettyHttpService nettyHttpService;
 
     private BundleContext bundleContext;
-    private List<String> requiredServices = new ArrayList<String>();
+    private int jaxRsServiceCount;
 
     @Activate
     protected void start(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
         try {
-            LOG.info("Starting micro services server...");
-            //TODO: introduce netty config file to set HTTP/S port, certs, credentials etc
-            // netty-http-config.conf properties file
+            countJaxrsServices();
 
-            //TODO: wait until all HttpHandlers become available
-            nettyHttpService =
-                    NettyHttpService.builder().setPort(7777).
-                            addHttpHandlers(dataHolder.getHttpServices()).build();
+            new Thread(new Runnable() {
+                public void run() {
+                    while (true) {
+                        if (dataHolder.getHttpServices().size() == jaxRsServiceCount) {
+                            LOG.info("Starting micro services server...");
+                            //TODO: introduce netty config file to set HTTP/S port, certs, credentials etc
+                            // netty-http-config.conf properties file
 
-            // Start the HTTP service
-            nettyHttpService.startAndWait();
-            LOG.info("Micro services server started");
+                            //TODO: wait until all HttpHandlers become available
+                            nettyHttpService =
+                                    NettyHttpService.builder().setPort(7777).
+                                            addHttpHandlers(dataHolder.getHttpServices()).build();
+
+                            // Start the HTTP service
+                            nettyHttpService.startAndWait();
+                            LOG.info("Micro services server started");
+                            break;
+                        } else {
+                            try {
+                                TimeUnit.MILLISECONDS.sleep(10);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }).start();
         } catch (Throwable e) {
             LOG.error("Could not start MicroServicesServerSC", e);
+        }
+    }
+    private void countJaxrsServices() {
+        Bundle[] bundles = bundleContext.getBundles();
+        for (Bundle bundle : bundles) {
+            String jaxRsServices = bundle.getHeaders().get("JAXRS-Services");
+            if (jaxRsServices != null) {
+                jaxRsServiceCount += Integer.parseInt(jaxRsServices);
+            }
         }
     }
 
@@ -72,13 +97,17 @@ public class MicroServicesServerSC {
             unbind = "removeHttpService"
     )
     protected void addHttpService(AbstractHttpService httpService) {
-        dataHolder.addHttpService(httpService);
-        if(nettyHttpService != null && nettyHttpService.isRunning()) {
-            nettyHttpService.addHttpHandler(httpService);
+        try {
+            dataHolder.addHttpService(httpService);
+            if (nettyHttpService != null && nettyHttpService.isRunning()) {
+                nettyHttpService.addHttpHandler(httpService);
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-        LOG.info("Added HTTP Service " + httpService);
     }
 
+    @SuppressWarnings("unused")
     protected void removeHttpService(AbstractHttpService httpService) {
         dataHolder.removeHttpService(httpService);
         //TODO: handle removing HttpService from NettyHttpService

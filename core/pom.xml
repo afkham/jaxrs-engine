@@ -91,9 +91,6 @@
                     <instructions>
                         <Bundle-Vendor>WSO2 Inc</Bundle-Vendor>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Bundle-Activator>
-                            org.wso2.carbon.microservices.server.internal.osgi.MicrosServicesActivator
-                        </Bundle-Activator>
                         <Private-Package>
                             org.wso2.carbon.microservices.server.internal
                         </Private-Package>

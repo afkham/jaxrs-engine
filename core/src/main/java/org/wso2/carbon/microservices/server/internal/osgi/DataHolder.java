@@ -18,6 +18,8 @@
  */
 package org.wso2.carbon.microservices.server.internal.osgi;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.microservices.server.AbstractHttpService;
 import org.wso2.carbon.microservices.server.internal.NettyHttpService;
 
@@ -31,6 +33,7 @@ import java.util.Set;
  */
 public class DataHolder {
 
+    private static final Logger LOG = LoggerFactory.getLogger(DataHolder.class);
     private Set<AbstractHttpService> httpServices = new HashSet<AbstractHttpService>();
 
     private static DataHolder instance = new DataHolder();
@@ -44,7 +47,7 @@ public class DataHolder {
 
     void addHttpService(AbstractHttpService httpHandler) {
         httpServices.add(httpHandler);
-        System.out.println("Added HTTP Service: " + httpHandler);
+        LOG.info("Added HTTP Service: " + httpHandler);
     }
 
     void removeHttpService(AbstractHttpService httpService) {
