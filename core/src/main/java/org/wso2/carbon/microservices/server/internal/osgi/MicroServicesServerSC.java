@@ -18,9 +18,16 @@
  */
 package org.wso2.carbon.microservices.server.internal.osgi;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.microservices.server.AbstractHttpService;
 import org.wso2.carbon.microservices.server.internal.NettyHttpService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component(
         name = "org.wso2.carbon.microservices.server.internal.MicroServicesServerSC",
@@ -28,13 +35,19 @@ import org.wso2.carbon.microservices.server.internal.NettyHttpService;
 )
 public class MicroServicesServerSC {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MicroServicesServerSC.class);
+
     private final DataHolder dataHolder = DataHolder.getInstance();
     private NettyHttpService nettyHttpService;
 
+    private BundleContext bundleContext;
+    private List<String> requiredServices = new ArrayList<String>();
+
     @Activate
-    protected void start() {
+    protected void start(BundleContext bundleContext) {
+        this.bundleContext = bundleContext;
         try {
-            System.out.println("+++ Starting micro services server...");
+            LOG.info("Starting micro services server...");
             //TODO: introduce netty config file to set HTTP/S port, certs, credentials etc
             // netty-http-config.conf properties file
 
@@ -45,9 +58,9 @@ public class MicroServicesServerSC {
 
             // Start the HTTP service
             nettyHttpService.startAndWait();
-            System.out.println("Micro services server started");
+            LOG.info("Micro services server started");
         } catch (Throwable e) {
-            e.printStackTrace();
+            LOG.error("Could not start MicroServicesServerSC", e);
         }
     }
 
@@ -63,7 +76,7 @@ public class MicroServicesServerSC {
         if(nettyHttpService != null && nettyHttpService.isRunning()) {
             nettyHttpService.addHttpHandler(httpService);
         }
-        System.out.println("Added HTTP Service " + httpService);
+        LOG.info("Added HTTP Service " + httpService);
     }
 
     protected void removeHttpService(AbstractHttpService httpService) {
