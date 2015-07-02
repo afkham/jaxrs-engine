@@ -19,17 +19,19 @@
 package org.wso2.carbon.microservices.server.internal.osgi;
 
 import org.wso2.carbon.microservices.server.AbstractHttpService;
+import org.wso2.carbon.microservices.server.internal.NettyHttpService;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * TODO: class level comment
  */
 public class DataHolder {
 
-    private List<AbstractHttpService> httpServices = new ArrayList<AbstractHttpService>();
+    private Set<AbstractHttpService> httpServices = new HashSet<AbstractHttpService>();
 
     private static DataHolder instance = new DataHolder();
 
@@ -42,15 +44,14 @@ public class DataHolder {
 
     void addHttpService(AbstractHttpService httpHandler) {
         httpServices.add(httpHandler);
-        System.out.println("Added HTTP Service " + httpHandler);
+        System.out.println("Added HTTP Service: " + httpHandler);
     }
 
     void removeHttpService(AbstractHttpService httpService) {
         httpServices.remove(httpService);
     }
 
-    List<AbstractHttpService> getHttpServices() {
-        return Collections.unmodifiableList(httpServices);
+    Set<AbstractHttpService> getHttpServices() {
+        return Collections.unmodifiableSet(httpServices);
     }
-
 }

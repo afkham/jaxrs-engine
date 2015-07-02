@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>jaxrs-sample</artifactId>
+    <artifactId>jaxrs-sample2</artifactId>
     <packaging>bundle</packaging>
 
     <name>jaxrs-sample Maven Webapp</name>
@@ -57,7 +57,7 @@
                     <instructions>
                         <Bundle-Vendor>WSO2 Inc</Bundle-Vendor>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Bundle-Activator>org.wso2.carbon.microservices.example.internal.StockQuoteActivator</Bundle-Activator>
+                        <Bundle-Activator>org.wso2.carbon.microservices.example2.internal.StockQuoteActivator</Bundle-Activator>
                         <Import-Package>
                             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
                             org.wso2.carbon.microservices.server,
@@ -65,7 +65,7 @@
                             com.google.gson.*,
                             javax.ws.rs.*
                         </Import-Package>
-                        <JAXRS-Service>org.wso2.carbon.microservices.example.StockQuoteService</JAXRS-Service>
+                        <JAXRS-Service>org.wso2.carbon.microservices.example2.StockQuoteService</JAXRS-Service>
                     </instructions>
                 </configuration>
             </plugin>

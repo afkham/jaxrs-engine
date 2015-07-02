@@ -60,7 +60,7 @@ public class MicroServicesServerSC {
     )
     protected void addHttpService(AbstractHttpService httpService) {
         dataHolder.addHttpService(httpService);
-        if(nettyHttpService.isRunning()) {
+        if(nettyHttpService != null && nettyHttpService.isRunning()) {
             nettyHttpService.addHttpHandler(httpService);
         }
         System.out.println("Added HTTP Service " + httpService);
