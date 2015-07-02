@@ -38,6 +38,7 @@ public class MicroServicesServerSC {
 
     private final DataHolder dataHolder = DataHolder.getInstance();
     private NettyHttpService nettyHttpService;
+    private NettyHttpService nettyHttpsService;
 
     private BundleContext bundleContext;
     private int jaxRsServiceCount;
@@ -56,20 +57,25 @@ public class MicroServicesServerSC {
                             //TODO: introduce netty config file to set HTTP/S port, certs, credentials etc
                             // netty-http-config.conf properties file
 
-                            //TODO: wait until all HttpHandlers become available
+                            int httpPort = 7777;
                             nettyHttpService =
-                                    NettyHttpService.builder().setPort(7777).
+                                    NettyHttpService.builder().setPort(httpPort).
                                             addHttpHandlers(dataHolder.getHttpServices()).build();
-
-                            // Start the HTTP service
                             nettyHttpService.startAndWait();
+                            LOG.info("Started HTTP service on " + httpPort);
+
+                            int httpsPort = 8888;
+                            nettyHttpsService =
+                                    NettyHttpService.builder().setPort(httpsPort).
+                                            addHttpHandlers(dataHolder.getHttpServices()).build();
+                            nettyHttpsService.startAndWait();
+                            LOG.info("Started HTTPS service on " + httpsPort);
                             LOG.info("Micro services server started");
                             break;
                         } else {
                             try {
                                 TimeUnit.MILLISECONDS.sleep(10);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                            } catch (InterruptedException ignored) {
                             }
                         }
                     }
