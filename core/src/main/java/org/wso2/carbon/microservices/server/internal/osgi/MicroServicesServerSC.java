@@ -128,7 +128,7 @@ public class MicroServicesServerSC {
                                         nettyServiceBuilder.setExecThreadKeepAliveSeconds(Integer.parseInt(execThreadKeepAliveSeconds));
                                     }
 
-                                    if (scheme.equalsIgnoreCase("https")) {
+                                    if (scheme != null && scheme.equalsIgnoreCase("https")) {
                                         if (certPass == null) {
                                             certPass = keystorePass;
                                         }
