@@ -1,0 +1,18 @@
+<server>
+    <service
+             host="127.0.0.1"
+             port="7777"
+             scheme="http"
+             bossThreadPoolSize="1"
+             workerThreadPoolSize="10"
+             execHandlerThreadPoolSize="60"/>
+
+    <service
+             host="127.0.0.1"
+             port="8888"
+             scheme="https"
+             threadPoolSize="250"
+             keystoreFile="repository/resources/security/cert.jks"
+             keystorePass="secret"
+             certPass="secret"/>
+</server>

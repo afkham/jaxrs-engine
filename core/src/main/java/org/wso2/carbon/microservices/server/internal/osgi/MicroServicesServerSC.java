@@ -25,7 +25,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.microservices.server.AbstractHttpService;
 import org.wso2.carbon.microservices.server.internal.NettyHttpService;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component(
@@ -50,26 +60,20 @@ public class MicroServicesServerSC {
             countJaxrsServices();
 
             new Thread(new Runnable() {
+                private List<NettyHttpService> nettyHttpServices = new ArrayList<NettyHttpService>();
+                private List<NettyHttpService.Builder> builders = new ArrayList<NettyHttpService.Builder>();
+
                 public void run() {
                     while (true) {
                         if (dataHolder.getHttpServices().size() == jaxRsServiceCount) {
                             LOG.info("Starting micro services server...");
-                            //TODO: introduce netty config file to set HTTP/S port, certs, credentials etc
-                            // netty-http-config.conf properties file
-
-                            int httpPort = 7777;
-                            nettyHttpService =
-                                    NettyHttpService.builder().setPort(httpPort).
-                                            addHttpHandlers(dataHolder.getHttpServices()).build();
-                            nettyHttpService.startAndWait();
-                            LOG.info("Started HTTP service on " + httpPort);
-
-                            int httpsPort = 8888;
-                            nettyHttpsService =
-                                    NettyHttpService.builder().setPort(httpsPort).
-                                            addHttpHandlers(dataHolder.getHttpServices()).build();
-                            nettyHttpsService.startAndWait();
-                            LOG.info("Started HTTPS service on " + httpsPort);
+                            createNettyServices();
+                            for (NettyHttpService.Builder builder : builders) {
+                                builder.addHttpHandlers(dataHolder.getHttpServices());
+                                NettyHttpService nettyService = builder.build();
+                                nettyHttpServices.add(nettyService);
+                                nettyService.startAndWait();
+                            }
                             LOG.info("Micro services server started");
                             break;
                         } else {
@@ -80,11 +84,83 @@ public class MicroServicesServerSC {
                         }
                     }
                 }
+
+                private void createNettyServices() {
+                    try {
+                        SAXParserFactory factory = SAXParserFactory.newInstance();
+                        SAXParser saxParser = factory.newSAXParser();
+
+                        DefaultHandler handler = new DefaultHandler() {
+
+                            @Override
+                            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+                                super.startElement(uri, localName, qName, attributes);
+                                if (qName.equals("service")) {
+                                    String host = attributes.getValue("host");
+                                    String port = attributes.getValue("port");
+                                    String bossThreadPoolSize = attributes.getValue("bossThreadPoolSize");
+                                    String workerThreadPoolSize = attributes.getValue("workerThreadPoolSize");
+                                    String execHandlerThreadPoolSize = attributes.getValue("execHandlerThreadPoolSize");
+                                    String execThreadKeepAliveSeconds = attributes.getValue("execThreadKeepAliveSeconds");
+
+                                    String scheme = attributes.getValue("scheme");
+                                    String keystoreFile = attributes.getValue("keystoreFile");
+                                    String keystorePass = attributes.getValue("keystorePass");
+                                    String certPass = attributes.getValue("certPass");
+
+                                    NettyHttpService.Builder nettyServiceBuilder = NettyHttpService.builder();
+                                    if (host != null) {
+                                        nettyServiceBuilder.setHost(host);
+                                    }
+                                    if (port != null) {
+                                        nettyServiceBuilder.setPort(Integer.parseInt(port));
+                                    }
+                                    if (bossThreadPoolSize != null) {
+                                        nettyServiceBuilder.setBossThreadPoolSize(Integer.parseInt(bossThreadPoolSize));
+                                    }
+                                    if (workerThreadPoolSize != null) {
+                                        nettyServiceBuilder.setWorkerThreadPoolSize(Integer.parseInt(workerThreadPoolSize));
+                                    }
+                                    if (execHandlerThreadPoolSize != null) {
+                                        nettyServiceBuilder.setExecThreadPoolSize(Integer.parseInt(execHandlerThreadPoolSize));
+                                    }
+                                    if (execThreadKeepAliveSeconds != null) {
+                                        nettyServiceBuilder.setExecThreadKeepAliveSeconds(Integer.parseInt(execThreadKeepAliveSeconds));
+                                    }
+
+                                    if (scheme.equalsIgnoreCase("https")) {
+                                        if (certPass == null) {
+                                            certPass = keystorePass;
+                                        }
+                                        if (keystoreFile == null || keystorePass == null) {
+                                            throw new IllegalArgumentException("keystoreFile or keystorePass not defined for HTTPS scheme");
+                                        }
+                                        File keyStore = new File(keystoreFile);
+                                        if (!keyStore.exists()) {
+                                            throw new IllegalArgumentException("Keystore File " + keystoreFile + " not found");
+                                        }
+                                        nettyServiceBuilder.enableSSL(keyStore, keystorePass, certPass);
+                                    }
+                                    builders.add(nettyServiceBuilder);
+                                }
+                            }
+                        };
+                        saxParser.parse("repository" + File.separator + "conf" + File.separator + "netty-server.xml",
+                                handler);
+                    } catch (ParserConfigurationException e) {
+                        e.printStackTrace();
+                    } catch (SAXException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }).start();
         } catch (Throwable e) {
             LOG.error("Could not start MicroServicesServerSC", e);
         }
     }
+
     private void countJaxrsServices() {
         Bundle[] bundles = bundleContext.getBundles();
         for (Bundle bundle : bundles) {
