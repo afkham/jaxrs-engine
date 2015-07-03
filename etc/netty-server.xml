@@ -2,15 +2,15 @@
     <service
              host="127.0.0.1"
              port="7777"
-             bossThreadPoolSize="1"
-             workerThreadPoolSize="10"
+             bossThreadPoolSize="2"
+             workerThreadPoolSize="250"
              execHandlerThreadPoolSize="60"/>
 
     <service
              host="127.0.0.1"
              port="8888"
-             bossThreadPoolSize="1"
-             workerThreadPoolSize="10"
+             bossThreadPoolSize="2"
+             workerThreadPoolSize="250"
              execHandlerThreadPoolSize="60"
              scheme="https"
              keystoreFile="repository/resources/security/cert.jks"
