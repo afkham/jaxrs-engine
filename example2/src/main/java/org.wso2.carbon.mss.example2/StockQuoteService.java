@@ -24,10 +24,10 @@ public class StockQuoteService extends AbstractHttpHandler {
     }
 
     @GET
-    @Path("getQuote/{symbol}")
+    @Path("getQuote")
     @Consumes("application/json")
     @Produces("application/json")
-    public void getQuote(HttpRequest request, HttpResponder responder, @PathParam("symbol") String symbol) {
+    public void getQuote(HttpRequest request, HttpResponder responder, @QueryParam("symbol") String symbol) {
         Double price = stockQuotes.get(symbol);
         if (price != null) {
             JsonObject response = new JsonObject();
