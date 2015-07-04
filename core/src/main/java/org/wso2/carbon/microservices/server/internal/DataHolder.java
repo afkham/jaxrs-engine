@@ -16,16 +16,14 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.microservices.server.internal.osgi;
+package org.wso2.carbon.microservices.server.internal;
 
+import co.cask.http.AbstractHttpHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.microservices.server.AbstractHttpService;
-import org.wso2.carbon.microservices.server.internal.NettyHttpService;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,7 +32,7 @@ import java.util.Set;
 public class DataHolder {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataHolder.class);
-    private Set<AbstractHttpService> httpServices = new HashSet<AbstractHttpService>();
+    private Set<AbstractHttpHandler> httpServices = new HashSet<AbstractHttpHandler>();
 
     private static DataHolder instance = new DataHolder();
 
@@ -45,16 +43,16 @@ public class DataHolder {
         return instance;
     }
 
-    void addHttpService(AbstractHttpService httpHandler) {
+    void addHttpService(AbstractHttpHandler httpHandler) {
         httpServices.add(httpHandler);
         LOG.info("Added HTTP Service: " + httpHandler);
     }
 
-    void removeHttpService(AbstractHttpService httpService) {
+    void removeHttpService(AbstractHttpHandler httpService) {
         httpServices.remove(httpService);
     }
 
-    Set<AbstractHttpService> getHttpServices() {
+    Set<AbstractHttpHandler> getHttpServices() {
         return Collections.unmodifiableSet(httpServices);
     }
 }

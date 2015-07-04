@@ -31,6 +31,11 @@
             <version>${rs-api.version}</version>
         </dependency>
         <dependency>
+            <groupId>co.cask.http</groupId>
+            <artifactId>netty-http</artifactId>
+            <version>${netty-http.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty</artifactId>
             <version>${netty.version}</version>
@@ -60,8 +65,8 @@
                         <Bundle-Activator>org.wso2.carbon.microservices.example2.internal.StockQuoteActivator</Bundle-Activator>
                         <Import-Package>
                             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
-                            org.wso2.carbon.microservices.server,
                             org.jboss.netty.*,
+                            co.cask.http.*,
                             com.google.gson.*,
                             javax.ws.rs.*
                         </Import-Package>

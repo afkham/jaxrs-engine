@@ -1,17 +1,17 @@
 package org.wso2.carbon.microservices.example2;
 
+import co.cask.http.AbstractHttpHandler;
+import co.cask.http.HttpResponder;
 import com.google.gson.JsonObject;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
-import org.wso2.carbon.microservices.server.AbstractHttpService;
-import org.wso2.carbon.microservices.server.HttpResponder;
 
 import javax.ws.rs.*;
 import java.util.HashMap;
 import java.util.Map;
 
 @Path("/SimpleStockQuote")
-public class StockQuoteService extends AbstractHttpService {
+public class StockQuoteService extends AbstractHttpHandler {
 
     // http://localhost:7778/StockQuote/get/IBM
 

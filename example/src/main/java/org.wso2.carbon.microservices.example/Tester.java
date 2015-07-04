@@ -18,8 +18,8 @@
  */
 package org.wso2.carbon.microservices.example;
 
-import org.wso2.carbon.microservices.server.AbstractHttpService;
-import org.wso2.carbon.microservices.server.internal.NettyHttpService;
+import co.cask.http.AbstractHttpHandler;
+import co.cask.http.NettyHttpService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Tester {
     public static void main(String[] args) {
-        List<AbstractHttpService> httpHandlers = new ArrayList<AbstractHttpService>();
+        List<AbstractHttpHandler> httpHandlers = new ArrayList<AbstractHttpHandler>();
         httpHandlers.add(new StockQuoteService());
         NettyHttpService service =
                 NettyHttpService.builder().setPort(7778).addHttpHandlers(httpHandlers).build();

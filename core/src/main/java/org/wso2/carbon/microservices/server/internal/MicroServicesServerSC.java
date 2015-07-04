@@ -16,15 +16,16 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.microservices.server.internal.osgi;
+package org.wso2.carbon.microservices.server.internal;
 
+import co.cask.http.AbstractHttpHandler;
+import co.cask.http.NettyHttpService;
+import co.cask.http.SSLConfig;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.microservices.server.AbstractHttpService;
-import org.wso2.carbon.microservices.server.internal.NettyHttpService;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -139,7 +140,10 @@ public class MicroServicesServerSC {
                                         if (!keyStore.exists()) {
                                             throw new IllegalArgumentException("Keystore File " + keystoreFile + " not found");
                                         }
-                                        nettyServiceBuilder.enableSSL(keyStore, keystorePass, certPass);
+                                        SSLConfig.Builder builder = SSLConfig.builder(keyStore, keystorePass).setCertificatePassword(certPass);
+//                                        .setTrustKeyStorePassword()
+//                                        .setTrustKeyStore()
+                                        nettyServiceBuilder.enableSSL(builder.build());
                                     }
                                     builders.add(nettyServiceBuilder);
                                 }
@@ -172,25 +176,26 @@ public class MicroServicesServerSC {
     }
 
     @Reference(
-            name = "http.handler",
-            service = AbstractHttpService.class,
+            name = "netty-http.handler",
+            service = AbstractHttpHandler.class,
             cardinality = ReferenceCardinality.AT_LEAST_ONE,
             policy = ReferencePolicy.DYNAMIC,
             unbind = "removeHttpService"
     )
-    protected void addHttpService(AbstractHttpService httpService) {
+    protected void addHttpService(AbstractHttpHandler httpService) {
         try {
+            System.out.println("===== Added HTTPService: " + httpService);
             dataHolder.addHttpService(httpService);
-            if (nettyHttpService != null && nettyHttpService.isRunning()) {
+            /*if (nettyHttpService != null && nettyHttpService.isRunning()) {
                 nettyHttpService.addHttpHandler(httpService);
-            }
+            }*/   // FIXME
         } catch (Throwable e) {
             e.printStackTrace();
         }
     }
 
     @SuppressWarnings("unused")
-    protected void removeHttpService(AbstractHttpService httpService) {
+    protected void removeHttpService(AbstractHttpHandler httpService) {
         dataHolder.removeHttpService(httpService);
         //TODO: handle removing HttpService from NettyHttpService
     }

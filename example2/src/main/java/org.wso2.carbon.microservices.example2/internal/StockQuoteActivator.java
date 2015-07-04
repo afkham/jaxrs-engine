@@ -18,17 +18,17 @@
  */
 package org.wso2.carbon.microservices.example2.internal;
 
+import co.cask.http.AbstractHttpHandler;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.wso2.carbon.microservices.example2.StockQuoteService;
-import org.wso2.carbon.microservices.server.AbstractHttpService;
 
 /**
  * TODO: class level comment
  */
 public class StockQuoteActivator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(AbstractHttpService.class, new StockQuoteService(), null);
+        bundleContext.registerService(AbstractHttpHandler.class, new StockQuoteService(), null);
         System.out.println("Registered StockQuoteService2");
     }
 

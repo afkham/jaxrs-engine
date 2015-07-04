@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>co.cask.http</groupId>
+            <artifactId>netty-http</artifactId>
+            <version>${netty-http.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.osgi</groupId>
             <artifactId>org.eclipse.osgi</artifactId>
             <version>${equinox.osgi.version}</version>
@@ -26,44 +31,9 @@
             <version>${equinox.osgi.services.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.scr.ds-annotations</artifactId>
-            <version>${apache.felix.scr.ds-annotations.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>${rs-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty</artifactId>
-            <version>${netty.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${gson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>13.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>jsr305</artifactId>
-            <version>${findbugs.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils-core</artifactId>
-            <version>${beanutils.version}</version>
         </dependency>
 
         <!-- Test dependencies -->
@@ -71,12 +41,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons.io.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -94,22 +58,13 @@
                         <Private-Package>
                             org.wso2.carbon.microservices.server.internal
                         </Private-Package>
-                        <Export-Package>
-                            !org.wso2.carbon.microservices.server.internal,
-                            org.wso2.carbon.microservices.server.*;version="1.0.0"
-                        </Export-Package>
                         <Import-Package>
                             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
                             org.osgi.util.tracker; version="${osgi.service.tracker.import.version.range}",
-                            org.jboss.netty.*,
-                            com.google.gson.*,
-                            com.google.common.*,
-                            javax.ws.rs.*,
+                            co.cask.http.*,
                             org.slf4j.*,
                             org.xml.sax.*,
-                            javax.xml.parsers.*,
-                            javax.net.ssl.*,
-                            org.apache.commons.beanutils.*
+                            javax.xml.parsers.*
                         </Import-Package>
                         <_dsannotations>*</_dsannotations>
                     </instructions>
