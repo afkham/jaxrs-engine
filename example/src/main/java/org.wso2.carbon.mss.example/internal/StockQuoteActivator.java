@@ -16,35 +16,23 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.microservices.example;
+package org.wso2.carbon.mss.example.internal;
 
 import co.cask.http.AbstractHttpHandler;
-import co.cask.http.NettyHttpService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.wso2.carbon.mss.example.StockQuoteService;
 
 /**
  * TODO: class level comment
  */
-public class Tester {
-    public static void main(String[] args) {
-        List<AbstractHttpHandler> httpHandlers = new ArrayList<AbstractHttpHandler>();
-        httpHandlers.add(new StockQuoteService());
-        NettyHttpService service =
-                NettyHttpService.builder().setPort(7778).addHttpHandlers(httpHandlers).build();
+public class StockQuoteActivator implements BundleActivator {
+    public void start(BundleContext bundleContext) throws Exception {
+        bundleContext.registerService(AbstractHttpHandler.class, new StockQuoteService(), null);
+        System.out.println("Registered StockQuoteService");
+    }
 
-        // Start the HTTP service
-        service.startAndWait();
+    public void stop(BundleContext bundleContext) throws Exception {
 
-
-        while (true) {
-            try {
-                TimeUnit.SECONDS.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

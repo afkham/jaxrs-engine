@@ -16,7 +16,7 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.microservices.server.internal;
+package org.wso2.carbon.mss.internal;
 
 import co.cask.http.AbstractHttpHandler;
 import co.cask.http.NettyHttpService;
@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component(
-        name = "org.wso2.carbon.microservices.server.internal.MicroServicesServerSC",
+        name = "org.wso2.carbon.mss.internal.MicroServicesServerSC",
         immediate = true
 )
 @SuppressWarnings("unused")

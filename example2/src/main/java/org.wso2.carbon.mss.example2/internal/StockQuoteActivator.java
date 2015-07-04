@@ -16,12 +16,12 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.microservices.example.internal;
+package org.wso2.carbon.mss.example2.internal;
 
 import co.cask.http.AbstractHttpHandler;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.wso2.carbon.microservices.example.StockQuoteService;
+import org.wso2.carbon.mss.example2.StockQuoteService;
 
 /**
  * TODO: class level comment
@@ -29,7 +29,7 @@ import org.wso2.carbon.microservices.example.StockQuoteService;
 public class StockQuoteActivator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
         bundleContext.registerService(AbstractHttpHandler.class, new StockQuoteService(), null);
-        System.out.println("Registered StockQuoteService");
+        System.out.println("Registered StockQuoteService2");
     }
 
     public void stop(BundleContext bundleContext) throws Exception {

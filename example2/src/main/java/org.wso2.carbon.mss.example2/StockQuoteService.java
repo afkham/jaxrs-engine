@@ -1,4 +1,4 @@
-package org.wso2.carbon.microservices.example2;
+package org.wso2.carbon.mss.example2;
 
 import co.cask.http.AbstractHttpHandler;
 import co.cask.http.HttpResponder;

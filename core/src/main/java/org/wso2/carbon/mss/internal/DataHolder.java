@@ -16,7 +16,7 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.microservices.server.internal;
+package org.wso2.carbon.mss.internal;
 
 import co.cask.http.AbstractHttpHandler;
 import org.slf4j.Logger;
