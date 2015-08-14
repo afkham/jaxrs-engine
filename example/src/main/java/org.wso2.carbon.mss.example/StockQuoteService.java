@@ -1,10 +1,11 @@
 package org.wso2.carbon.mss.example;
 
 import co.cask.http.AbstractHttpHandler;
+import co.cask.http.BodyConsumer;
 import co.cask.http.HttpResponder;
 import com.google.gson.JsonObject;
-import org.jboss.netty.handler.codec.http.HttpRequest;
-import org.jboss.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.HttpResponseStatus;
 
 import javax.ws.rs.*;
 import java.util.HashMap;
@@ -27,7 +28,36 @@ public class StockQuoteService extends AbstractHttpHandler {
     @Path("get/{symbol}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void getQuote(HttpRequest request, HttpResponder responder, @PathParam("symbol") String symbol) {
+    public void getQuote(HttpRequest request, HttpResponder responder, final @PathParam("symbol") String symbol) {
+//    public void getQuote(HttpRequest request, HttpResponder responder, final @PathParam("symbol") String symbol) {
+//    public BodyConsumer getQuote(HttpRequest request, HttpResponder responder, final @PathParam("symbol") String symbol) {
+        StockQuoteService.this.getQuote(responder, symbol);
+
+        /*return new BodyConsumer() {
+            @Override
+            public void chunk(ChannelBuffer request, HttpResponder responder) {
+                // write the incoming data to a file
+                System.out.println("--- chunk");
+            }
+            @Override
+            public void finished(HttpResponder responder) {
+               StockQuoteService.this.getQuote(responder, symbol);
+             }
+            @Override
+            public void handleError(Throwable cause) {
+                // if there were any error during this process, this will be called.
+                // do clean-up here.
+                System.out.println("--- handle error");
+            }
+        };*/
+    }
+
+    private void getQuote(HttpResponder responder, String symbol) {
+        /*System.out.println("-----------------------------------");
+        for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+            System.out.println(ste);
+        }
+        System.out.println("-----------------------------------");*/
         Double price = stockQuotes.get(symbol);
         if (price != null) {
             JsonObject response = new JsonObject();

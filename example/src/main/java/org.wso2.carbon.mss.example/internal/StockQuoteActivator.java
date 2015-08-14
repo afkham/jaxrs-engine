@@ -18,7 +18,7 @@
  */
 package org.wso2.carbon.mss.example.internal;
 
-import co.cask.http.AbstractHttpHandler;
+import co.cask.http.HttpHandler;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.wso2.carbon.mss.example.StockQuoteService;
@@ -28,7 +28,7 @@ import org.wso2.carbon.mss.example.StockQuoteService;
  */
 public class StockQuoteActivator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(AbstractHttpHandler.class, new StockQuoteService(), null);
+        bundleContext.registerService(HttpHandler.class, new StockQuoteService(), null);
         System.out.println("Registered StockQuoteService");
     }
 
