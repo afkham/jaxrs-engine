@@ -69,6 +69,10 @@
                         <Import-Package>
                             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
                             org.osgi.util.tracker; version="${osgi.service.tracker.import.version.range}",
+                            org.wso2.carbon.http.netty.listener.*,
+                            io.netty.util.*,
+                            io.netty.channel.*,
+                            io.netty.handler.codec.http.*,
                             co.cask.http.*,
                             org.slf4j.*,
                             org.xml.sax.*,

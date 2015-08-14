@@ -75,7 +75,7 @@
                         <Bundle-Activator>org.wso2.carbon.mss.example2.internal.StockQuoteActivator</Bundle-Activator>
                         <Import-Package>
                             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
-                            org.jboss.netty.*,
+                            io.netty.handler.codec.http.*,
                             co.cask.http.*,
                             com.google.gson.*,
                             javax.ws.rs.*

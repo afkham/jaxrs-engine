@@ -84,7 +84,7 @@ public class MicroServicesServerSC {
                             CarbonNettyServerInitializer httpsInitializer = new JaxrsCarbonNettyInitializer();
 
                             Hashtable<String, String> httpInitParams = new Hashtable<String, String>();
-                            httpInitParams.put("channel.id", "HTTP-netty");
+                            httpInitParams.put("channel.id", "HTTP-nettyw");
                             bundleContext.registerService(CarbonNettyServerInitializer.class, httpInitializer, httpInitParams);
 
                             /*Hashtable<String, String> httpInitParams = new Hashtable<String, String>();

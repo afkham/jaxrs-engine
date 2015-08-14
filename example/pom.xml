@@ -65,7 +65,7 @@
                         <Import-Package>
                             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
                             co.cask.http.*,
-                            org.jboss.netty.*,
+                            io.netty.handler.codec.http.*,
                             com.google.gson.*,
                             javax.ws.rs.*
                         </Import-Package>
