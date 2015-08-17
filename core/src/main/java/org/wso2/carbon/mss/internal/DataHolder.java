@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * TODO: class level comment
+ * DataHolder for the MSS component
  */
 public class DataHolder {
 
