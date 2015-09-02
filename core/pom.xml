@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
-            <artifactId>carbon-netty-http-transport</artifactId>
+            <artifactId>org.wso2.carbon.transport.http.netty</artifactId>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
@@ -69,7 +69,7 @@
                         <Import-Package>
                             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
                             org.osgi.util.tracker; version="${osgi.service.tracker.import.version.range}",
-                            org.wso2.carbon.http.netty.listener.*,
+                            org.wso2.carbon.transport.http.netty.listener.*,
                             io.netty.util.*,
                             io.netty.channel.*,
                             io.netty.handler.codec.http.*,

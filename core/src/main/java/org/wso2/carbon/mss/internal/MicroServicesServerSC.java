@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.http.netty.listener.CarbonNettyServerInitializer;
+import org.wso2.carbon.transport.http.netty.listener.CarbonNettyServerInitializer;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -77,11 +77,13 @@ public class MicroServicesServerSC {
 
                             Hashtable<String, String> httpInitParams = new Hashtable<>();
                             httpInitParams.put(CHANNEL_ID_KEY, "netty-jaxrs-http");
-                            bundleContext.registerService(CarbonNettyServerInitializer.class, new JaxrsCarbonNettyInitializer(), httpInitParams);
+                            bundleContext.registerService(CarbonNettyServerInitializer.class,
+                                    new JaxrsCarbonNettyInitializer(), httpInitParams);
 
                             Hashtable<String, String> httpsInitParams = new Hashtable<>();
                             httpsInitParams.put(CHANNEL_ID_KEY, "netty-jaxrs-https");
-                            bundleContext.registerService(CarbonNettyServerInitializer.class, new JaxrsCarbonNettyInitializer(), httpsInitParams);
+                            bundleContext.registerService(CarbonNettyServerInitializer.class,
+                                    new JaxrsCarbonNettyInitializer(), httpsInitParams);
 
                             LOG.info("Micro services server started");
                             break;
