@@ -42,6 +42,7 @@ import org.wso2.carbon.transport.http.netty.listener.CarbonNettyServerInitialize
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Component(
@@ -102,6 +103,11 @@ public class MicroServicesServerSC {
     }
 
     private class JaxrsCarbonNettyInitializer implements CarbonNettyServerInitializer {
+        @Override
+        public void setup(Map<String, String> map) {
+            // Nothing to do
+        }
+
         public void initChannel(SocketChannel channel) {
             ChannelPipeline pipeline = channel.pipeline();
             //        pipeline.addLast("tracker", connectionTracker);
